@@ -1,0 +1,76 @@
+Frontend:
+    React
+    LiveKit client
+    WebSocket
+    Zustand
+
+Backend:
+    Go
+    Gorilla WebSocket
+    JWT
+    REST API
+
+Voice:
+    LiveKit server
+
+Infra:
+    PostgreSQL
+    Caddy (HTTPS)
+    Docker
+    
+
+Wymagania Funkcjonalne:
+
+    [Logowanie i Rejestracja]
+    Rejestracja użytkownika (użytkownik może założyć konto (email+hasło), hasło przechowywane jako hash)
+    Logowanie użytkownika (użytkownik może się zalogować, otrzymuje JWT, token jest wymagany do wszystkich chronionych endpointów)
+    Autoryzacja WebSocket (WebSocket wymaga ważnego JWT, połączenie bez tokena jest odrzucane)
+    
+    [Serwery]
+    Tworzenie serwera (użytkownik może utworzyć serwer, twórca zostaje właścicielem serwera)
+    Dołączanie do serwera (użytkownik może dołączyć przez zaproszenie)
+    Lista serwerów (użytkownik widzi liste serwerów do których dołączył)
+    
+    [Kanały]
+    Tworzenie kanału głosowego
+    Tworzenie kanału tekstowego
+    Wyświetlanie listy serwerów
+    Wyświetlanie historii wiadomości kanału tekstowego
+    Dołączanie do kanału głosowego (użytkownik może być na jednym kanale naraz, backend generuje token SFU, frontend łączy sie z serwerem voice)
+    Opuszczanie kanału głosowego (użytkownik może opuścić kanał, zostaje usunięty z listy aktywnych uczestników)
+    Lista użytkowników na kanale (aktualizowana w czasie rzeczywistym lista aktualnie połączonych uczestników)
+    Wyciszanie na kanale (użytkownik może wyciszyć swój mikrofon, status widoczny dla innych użytkowników)
+    
+    [Realtime]
+    Eventy WebSocket
+    
+Wymagania niefunkcjonalne:
+
+    [Wydajność]
+    Niskie opóźnienie audio (opóźnienie poniżej 300ms)
+    Krótki czas dołącznia do kanału (czas dołączenia poniżej 2 sekundy)
+    Skalowalność (obsługa dużej ilości użytrkowników jednocześnie)
+    
+    [Dostępność]
+    Odporność na rozłączenia (automatyczna próba ponownego połączenia WebSocket oraz SFU)
+    Stabilny dostęp do serwisu (wysoki procent uptime)
+    
+    [Bezpieczeństwo]
+    HTTPS (komunikacja przez TLS)
+    Szyfrowanie WebRTC (SRTP)
+    Hasła hashowane (hasła zapisywane jako hash+salt)
+    Autoryzacja (użytkownik może dołączyć tylko do kanałów w serwerach których jest członkiem)
+    
+    [Spójność danych]
+    Stan kanału (backend jako single source of truth)
+    
+    [Użyteczność]
+    Proste UI (dołączenie do kanału jednym kliknięciem, widoczny status mikrofonu)
+    
+    [Architektura]
+    Separacja odpowiedzialnośći (Frontend → UI + WebRTC client; Go backend → logika biznesowa; SFU → przesył audio; PostgreSQL → trwałe dane)
+    
+    [Monitorowanie]
+    Logi backendu
+    Logi voice server
+    Healthcheck endpoint

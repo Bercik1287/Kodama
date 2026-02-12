@@ -1,0 +1,225 @@
+.channel-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.channel-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.channel-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+/* Section */
+
+.channel-section {
+  margin-bottom: 8px;
+}
+
+.channel-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 12px;
+}
+
+.channel-section-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.channel-add-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.1s;
+  line-height: 1;
+}
+
+.channel-add-btn:hover {
+  color: var(--text-primary);
+}
+
+.channel-empty {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 4px 16px;
+  font-style: italic;
+}
+
+/* Channel item */
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 12px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  text-align: left;
+  position: relative;
+}
+
+.channel-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.channel-item.active {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.channel-icon {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.voice-icon {
+  font-size: 0.625rem;
+  letter-spacing: -1px;
+}
+
+.channel-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.channel-delete-btn {
+  opacity: 0;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: opacity 0.1s, color 0.1s;
+  line-height: 1;
+}
+
+.channel-item:hover .channel-delete-btn {
+  opacity: 1;
+}
+
+.channel-delete-btn:hover {
+  color: var(--danger);
+}
+
+/* Create channel form */
+
+.create-channel-form {
+  padding: 4px 12px 8px;
+}
+
+.create-channel-input {
+  width: 100%;
+  padding: 6px 8px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 0.8125rem;
+  outline: none;
+  margin-bottom: 4px;
+}
+
+.create-channel-input:focus {
+  border-color: var(--accent);
+}
+
+.create-channel-input::placeholder {
+  color: var(--text-muted);
+}
+
+.create-channel-actions {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.create-channel-cancel,
+.create-channel-submit {
+  padding: 3px 8px;
+  font-size: 0.6875rem;
+  border-radius: calc(var(--radius) - 2px);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.create-channel-cancel {
+  background: none;
+  color: var(--text-muted);
+}
+
+.create-channel-cancel:hover {
+  color: var(--text-primary);
+}
+
+.create-channel-submit {
+  background: var(--accent);
+  color: white;
+}
+
+.create-channel-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Voice participants inline */
+
+.voice-participants-inline {
+  padding: 2px 12px 4px 38px;
+}
+
+.voice-participant-inline {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.voice-participant-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  flex-shrink: 0;
+}
+
+.voice-participant-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.voice-muted-badge {
+  font-size: 0.5625rem;
+  color: var(--danger);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}

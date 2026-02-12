@@ -1,0 +1,182 @@
+.server-detail {
+  width: 240px;
+  background-color: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.server-detail-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.server-detail-name {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.server-detail-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.server-action-btn {
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  background: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.server-action-btn:hover {
+  background: var(--bg-hover);
+}
+
+.server-action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.server-info {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.server-info-item {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.server-info-badge {
+  font-size: 0.6875rem;
+  background: var(--accent);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* Channels sections */
+
+.server-channels-section {
+  padding: 12px 8px 4px;
+}
+
+.server-section-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 0 8px 8px;
+}
+
+.server-placeholder-text {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  padding: 4px 8px 8px;
+  font-style: italic;
+}
+
+/* Members section */
+
+.server-members-section {
+  padding: 12px 8px;
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+}
+
+.server-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.server-member {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: calc(var(--radius) - 2px);
+  transition: background 0.1s;
+}
+
+.server-member:hover {
+  background: var(--bg-hover);
+}
+
+.server-member.self {
+  background: rgba(124, 58, 237, 0.08);
+}
+
+.member-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.member-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.member-name {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.member-role-badge {
+  font-size: 0.6875rem;
+  flex-shrink: 0;
+}
+
+/* Danger button */
+
+.btn-danger {
+  padding: 0.625rem 1.25rem;
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}

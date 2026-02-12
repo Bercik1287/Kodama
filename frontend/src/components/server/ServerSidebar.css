@@ -1,0 +1,125 @@
+.server-sidebar {
+  width: 72px;
+  background-color: var(--bg-primary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0;
+  gap: 8px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.server-sidebar::-webkit-scrollbar {
+  width: 0;
+}
+
+.server-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  border: none;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-radius 0.2s, background-color 0.2s, color 0.2s;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.server-icon:hover {
+  border-radius: 16px;
+  background-color: var(--accent);
+  color: white;
+}
+
+.server-icon.active {
+  border-radius: 16px;
+  background-color: var(--accent);
+  color: white;
+}
+
+.server-icon-home {
+  font-size: 1.5rem;
+}
+
+.server-icon-add {
+  background-color: transparent;
+  border: 2px dashed var(--border);
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.server-icon-add:hover {
+  border-color: var(--accent);
+  background-color: transparent;
+  color: var(--accent);
+}
+
+.server-sidebar-divider {
+  width: 32px;
+  height: 2px;
+  background-color: var(--border);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* Add server menu */
+
+.server-add-wrapper {
+  position: relative;
+}
+
+.server-add-menu {
+  position: fixed;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  z-index: 9999;
+  animation: fadeIn 0.1s ease;
+}
+
+.server-add-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+}
+
+.server-add-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: calc(var(--radius) - 2px);
+  transition: background 0.1s;
+}
+
+.server-add-menu-item:hover {
+  background: var(--bg-hover);
+}
+
+.menu-icon {
+  font-size: 0.875rem;
+  color: var(--accent-light);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
