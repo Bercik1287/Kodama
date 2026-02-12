@@ -80,8 +80,13 @@ func main() {
 	protected.HandleFunc("/voice/state", channelHandler.GetMyVoiceState).Methods("GET")
 
 	// CORS
+	allowedOrigins := []string{"http://localhost:5173", "http://localhost:3000"}
+	if corsOrigin := os.Getenv("CORS_ORIGIN"); corsOrigin != "" {
+		allowedOrigins = append(allowedOrigins, corsOrigin)
+	}
+
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:5173", "http://localhost:3000"},
+		AllowedOrigins:   allowedOrigins,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type"},
 		AllowCredentials: true,
