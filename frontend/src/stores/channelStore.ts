@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { channelApi, messageApi, voiceApi } from '../api/client';
+import { voiceService } from '../services/voiceService';
 import type { Channel, Message, VoiceParticipant } from '../types';
 
 interface ChannelState {
@@ -147,7 +148,44 @@ export const useChannelStore = create<ChannelState>((set, get) => ({
   // Voice
   joinVoice: async (serverId: number, channelId: number) => {
     try {
+      // Pobierz dane użytkownika z authStore
+      const { useAuthStore } = await import('./authStore');
+      const authState = useAuthStore.getState();
+      const user = authState.user;
+      if (!user) throw new Error('Brak zalogowanego użytkownika');
+
+      // Połącz REST API (aktualizuje stan na serwerze)
       const participants = await voiceApi.join(serverId, channelId);
+
+      // Połącz WebRTC (prawdziwe audio)
+      await voiceService.join(channelId, user.id, user.username);
+
+      // Nasłuchuj aktualizacji peerów
+      const updatePeers = () => {
+        const peers = voiceService.getPeers();
+        const voiceParticipants: VoiceParticipant[] = [
+          // Ja
+          { user_id: user.id, username: user.username, muted: voiceService.getMyMuteState() },
+          // Inni peerzy
+          ...peers.map((p) => ({
+            user_id: p.userId,
+            username: p.username,
+            muted: p.muted,
+          })),
+        ];
+        set({ voiceParticipants, isMuted: voiceService.getMyMuteState() });
+      };
+
+      voiceService.on('peers-updated', updatePeers);
+      voiceService.on('disconnected', () => {
+        voiceService.off('peers-updated', updatePeers);
+        set({
+          voiceParticipants: [],
+          currentVoiceChannelId: null,
+          isMuted: false,
+        });
+      });
+
       set({
         voiceParticipants: participants,
         currentVoiceChannelId: channelId,
@@ -162,6 +200,9 @@ export const useChannelStore = create<ChannelState>((set, get) => ({
 
   leaveVoice: async () => {
     try {
+      // Rozłącz WebRTC
+      await voiceService.leave();
+      // Rozłącz REST API
       await voiceApi.leave();
       set({
         voiceParticipants: [],
@@ -177,11 +218,12 @@ export const useChannelStore = create<ChannelState>((set, get) => ({
   toggleMute: async () => {
     const { isMuted } = get();
     try {
-      const participants = await voiceApi.toggleMute(!isMuted);
-      set({
-        voiceParticipants: participants,
-        isMuted: !isMuted,
-      });
+      const newMuted = !isMuted;
+      // Ustaw mute w WebRTC
+      voiceService.setMuted(newMuted);
+      // Powiadom serwer REST
+      await voiceApi.toggleMute(newMuted);
+      set({ isMuted: newMuted });
     } catch (err) {
       console.error('Błąd zmiany statusu mikrofonu:', err);
     }

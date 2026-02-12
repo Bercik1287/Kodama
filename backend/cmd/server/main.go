@@ -36,6 +36,8 @@ func main() {
 	serverHandler := handlers.NewServerHandler(db)
 	voiceState := handlers.NewVoiceState()
 	channelHandler := handlers.NewChannelHandler(db, voiceState)
+	signalingHub := handlers.NewSignalingHub()
+	signalingHandler := handlers.NewSignalingHandler(signalingHub, voiceState)
 
 	// Publiczne endpointy
 	r.HandleFunc("/api/auth/register", authHandler.Register).Methods("POST")
@@ -72,12 +74,15 @@ func main() {
 	protected.HandleFunc("/servers/{serverId:[0-9]+}/channels/{channelId:[0-9]+}/messages", channelHandler.GetMessages).Methods("GET")
 	protected.HandleFunc("/servers/{serverId:[0-9]+}/channels/{channelId:[0-9]+}/messages", channelHandler.SendMessage).Methods("POST")
 
-	// Kanały głosowe
+	// Kanały głosowe (REST — stan)
 	protected.HandleFunc("/servers/{serverId:[0-9]+}/channels/{channelId:[0-9]+}/voice/join", channelHandler.JoinVoiceChannel).Methods("POST")
 	protected.HandleFunc("/servers/{serverId:[0-9]+}/channels/{channelId:[0-9]+}/voice/participants", channelHandler.GetVoiceParticipants).Methods("GET")
 	protected.HandleFunc("/voice/leave", channelHandler.LeaveVoiceChannel).Methods("POST")
 	protected.HandleFunc("/voice/mute", channelHandler.ToggleMute).Methods("POST")
 	protected.HandleFunc("/voice/state", channelHandler.GetMyVoiceState).Methods("GET")
+
+	// WebSocket signaling (WebRTC voice) — auth przez query param ?token=
+	r.HandleFunc("/api/ws/voice/{channelId:[0-9]+}", signalingHandler.HandleWebSocket)
 
 	// CORS
 	allowedOrigins := []string{"http://localhost:5173", "http://localhost:3000"}
