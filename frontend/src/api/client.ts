@@ -1,4 +1,4 @@
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 async function request<T>(
   endpoint: string,
@@ -20,10 +20,11 @@ async function request<T>(
     headers,
   });
 
-  const data = await response.json();
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : null;
 
   if (!response.ok) {
-    throw new Error(data.error || 'Wystąpił błąd');
+    throw new Error(data?.error || 'Wystąpił błąd');
   }
 
   return data as T;
